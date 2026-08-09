@@ -132,7 +132,7 @@ def run_agent(
 
             print(
                 "\nAgent:",
-                response.message.content
+                response.message.content.strip()
             )
 
             return
@@ -230,6 +230,10 @@ def main():
                 "You may use multiple tools. "
 
                 "Continue until the user's task is complete. "
+
+                "Do not show your reasoning or internal thoughts. "
+
+                "Only provide the final answer to the user. "
 
                 "Keep final answers concise."
             )
