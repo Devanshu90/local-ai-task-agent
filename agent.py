@@ -13,11 +13,9 @@ from tools import (
     list_memories
 )
 
-
 MODEL = "qwen3:4b"
-
 MAX_STEPS = 10
-
+DEBUG = False
 
 # ============================================================
 # TOOL REGISTRY
@@ -102,16 +100,14 @@ def run_agent(
         }
     )
 
-
     for step in range(
         MAX_STEPS
     ):
 
-        print(
-            f"\n--- Agent step "
-            f"{step + 1} ---"
-        )
-
+        if DEBUG:
+            print(
+                f"\n--- Agent step {step + 1} ---"
+            )
 
         response = chat(
 
@@ -124,11 +120,9 @@ def run_agent(
             think=False
         )
 
-
         messages.append(
             response.message
         )
-
 
         # ----------------------------------------------------
         # No tool required
@@ -142,7 +136,6 @@ def run_agent(
             )
 
             return
-
 
         # ----------------------------------------------------
         # Execute tools
@@ -160,26 +153,26 @@ def run_agent(
                 tool_call.function.arguments
             )
 
+            if DEBUG:
 
-            print(
-                f"Tool: {tool_name}"
-            )
+                print(
+                    f"Tool: {tool_name}"
+                )
 
-            print(
-                f"Arguments: {arguments}"
-            )
-
+                print(
+                    f"Arguments: {arguments}"
+                )
 
             result = execute_tool(
                 tool_name,
                 arguments
             )
 
+            if DEBUG:
 
-            print(
-                f"Result: {result}"
-            )
-
+                print(
+                    f"Result: {result}"
+                )
 
             messages.append(
                 {
@@ -189,12 +182,12 @@ def run_agent(
                 }
             )
 
+    if DEBUG:
 
-    print(
-        "\nAgent stopped: "
-        "maximum steps reached."
-    )
-
+        print(
+            "\nAgent stopped: "
+            "maximum steps reached."
+        )
 
 # ============================================================
 # MAIN CHAT
@@ -243,28 +236,29 @@ def main():
         }
     ]
 
-
     print(
-        "\n================================="
+    "\n" + "=" * 40
     )
 
     print(
-        "       LOCAL AI TASK AGENT"
+    "       LOCAL AI TASK AGENT"
     )
 
     print(
-        "================================="
+    "=" * 40
     )
 
     print(
-        "Model:",
-        MODEL
+    f"Model: {MODEL}"
     )
 
     print(
-        "\nType 'exit' to quit."
+    f"Debug: {'ON' if DEBUG else 'OFF'}"
     )
 
+    print(
+    "\nType 'exit' to quit."
+    )
 
     while True:
 
